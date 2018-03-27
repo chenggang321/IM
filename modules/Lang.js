@@ -2,8 +2,7 @@
  * Created by HH_Girl on 2018/3/24.
  */
 //语言扩展模块
-IM.define('Lang', [], function () {
-    var root = this;
+AMD.module('modules/Lang', function () {
     console.log('已加载Lang模块');
     //判断类型与转换
     var tools = {
@@ -324,8 +323,8 @@ IM.define('Lang', [], function () {
             throw new (e || Error)(str);
         }
     };
-    IM.extend(tools, false);
-
+    var Lang ={};
+    IM.mix(Lang,tools);
     /*
      * Object.defineProperty() 方法会直接在一个对象上定义一个新属性，
      *  或者修改一个对象的现有属性， 并返回这个对象。
@@ -408,19 +407,19 @@ IM.define('Lang', [], function () {
     * （两者的主要区别是 一个 for-in 循环还会枚举其原型链上的属性）。
     * */
     'String,Array,Number,Object'.replace(/[^, ]+/g, function (Type) {//以逗号分隔
-        IM[Type] = function (pack) {
+        Lang[Type] = function (pack) {
             var isNative = typeof pack === 'string',
                 methods = isNative ? pack.match(/[^, ]+/g) : Object.keys(pack);
             methods.forEach(function (method) {
-                IM[Type][method] = isNative ?
+                Lang[Type][method] = isNative ?
                     function (obj) {
-                        return obj[method].apply(obj, IM.slice(arguments, 1))
+                        return obj[method].apply(obj, Lang.slice(arguments, 1))
                     } : pack[method];
             })
         }
     });
     //对字符串的扩展
-    IM.String({
+    Lang.String({
         /*取得一个字符串所有字节的长度。这是一个后端过来的方法，如果将一个英文字符插
          *入数据库 char、varchar、text 类型的字段时占用一个字节，而一个中文字符插入
          *时占用两个字节，为了避免插入溢出，就需要事先判断字符串的字节长度。在前端，
@@ -493,11 +492,11 @@ IM.define('Lang', [], function () {
         }
     });
     //字符串的原生原型方法
-    IM.String("charAt,charCodeAt,concat,indexOf,lastIndexOf,localeCompare,match," + "contains,endsWith,startsWith,repeat," + //es6
+    Lang.String("charAt,charCodeAt,concat,indexOf,lastIndexOf,localeCompare,match," + "contains,endsWith,startsWith,repeat," + //es6
         "replace,search,slice,split,substring,toLowerCase,toLocaleLowerCase,toUpperCase,trim,toJSON");
 
     //对数组的扩展
-    IM.Array({
+    Lang.Array({
         //判定数组是否包含指定目标。
         contains: function(target, item) {
             return !!~target.indexOf(item);
@@ -664,7 +663,7 @@ IM.define('Lang', [], function () {
         }
     });
     //数组原型方法
-    IM.Array("concat,join,pop,push,shift,slice,sort,reverse,splice,unshift," + "indexOf,lastIndexOf,every,some,filter,reduce,reduceRight");
+    Lang.Array("concat,join,pop,push,shift,slice,sort,reverse,splice,unshift," + "indexOf,lastIndexOf,every,some,filter,reduce,reduceRight");
     function cloneOf(item){
         var name = IM.type(item);
         switch (name){
@@ -705,11 +704,11 @@ IM.define('Lang', [], function () {
     "abs,acos,asin,atan,atan2,ceil,cos,exp,floor,log,pow,sin,sqrt,tan".replace(/[^, ]+/g, function(name) {
         NumberPack[name] = Math[name];
     });
-    IM.Number(NumberPack);
-    IM.Number("toFixed,toExponential,toPrecision,toJSON");
+    Lang.Number(NumberPack);
+    Lang.Number("toFixed,toExponential,toPrecision,toJSON");
 
     //对对象的扩展
-    IM.Object({
+    Lang.Object({
         //根据传入数组取当前对象相关的键值对组成一个新对象返回
         subset: function(target, props) {
             var result = {};
@@ -757,7 +756,7 @@ IM.define('Lang', [], function () {
         }
     });
     //对象原型方法
-    IM.Object("hasOwnProperty,isPrototypeOf,propertyIsEnumerable");
+    Lang.Object("hasOwnProperty,isPrototypeOf,propertyIsEnumerable");
     function mergeOne(source, key, current) {
         //使用深拷贝方法将多个对象或数组合并成一个
         if (IM.isPlainObject(source[key])) { //只处理纯JS对象，不处理window与节点
@@ -767,6 +766,5 @@ IM.define('Lang', [], function () {
         }
         return source;
     }
-    console.log(IM);
-    return IM;
+    return Lang;
 });

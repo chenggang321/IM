@@ -1,26 +1,17 @@
 /**
  * Created by HH_Girl on 2018/3/24.
  */
-;(function(root,factory){
+;(function (root, factory) {
     factory.call(root);
-})(window,function(){
+})(window, function () {
     //框架配置
-    var __default__={
-        importModules:['modules/Lang','modules/Class']
+    var __OPT__ = {
+        modules: ['modules/Lang', 'modules/Class', 'modules/Query','modules/Observer']
     };
     //框架对象
-    var IM={
-        Lang:{},//语言扩展
-        Class:{}//类库
-    };
-    //导入模块
-    AMD.module(__default__.importModules,function(Lang,Class){
-        IM.Lang=Lang;
-        IM.Class=Class;
-    });
-    //框架公用方法
-    var __method__ = {
-        mix: function(receiver, supplier){
+    var IM = {
+        //杂糅
+        mix: function (receiver, supplier) {
             var args = [].slice.call(arguments),
                 i = 1,
                 key, //如果最后参数是布尔，判定是否覆写同名属性
@@ -39,8 +30,14 @@
             return receiver;
         }
     };
-    //继承
-    __method__.mix(IM,__method__);
+    //导入模块
+    AMD.module(__OPT__.modules, function () {
+        [].forEach.call(arguments, function (item,index) {
+            var moduleUrl=__OPT__.modules[index],
+                moduleName=moduleUrl.substring(moduleUrl.lastIndexOf('/')+1,moduleUrl.length);
+            IM[moduleName]=item;
+        });
+    });
     //挂到window上
-    window.IM=IM;
+    window.IM = IM;
 });

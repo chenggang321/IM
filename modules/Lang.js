@@ -4,6 +4,7 @@
 //语言扩展模块
 AMD.module('modules/Lang', function () {
     console.log('已加载Lang模块');
+    var Lang ={};
     //判断类型与转换
     var tools = {
         //格式化类型
@@ -323,7 +324,6 @@ AMD.module('modules/Lang', function () {
             throw new (e || Error)(str);
         }
     };
-    var Lang ={};
     IM.mix(Lang,tools);
     /*
      * Object.defineProperty() 方法会直接在一个对象上定义一个新属性，

@@ -6,7 +6,15 @@
 })(window, function () {
     //框架配置
     var __OPT__ = {
-        modules: ['modules/Lang', 'modules/Class', 'modules/Query','modules/Observer']
+        modules: [
+            'modules/Lang',
+            'modules/Class',
+            'modules/Query',
+            'modules/Observer',
+            'modules/Data',
+            'modules/Mvvm',
+            'modules/Support'
+        ]
     };
     //框架对象
     var IM = {
@@ -32,10 +40,10 @@
     };
     //导入模块
     AMD.module(__OPT__.modules, function () {
-        [].forEach.call(arguments, function (item,index) {
-            var moduleUrl=__OPT__.modules[index],
-                moduleName=moduleUrl.substring(moduleUrl.lastIndexOf('/')+1,moduleUrl.length);
-            IM[moduleName]=item;
+        [].forEach.call(arguments, function (item, index) {
+            var moduleUrl = __OPT__.modules[index],
+                moduleName = moduleUrl.substring(moduleUrl.lastIndexOf('/') + 1, moduleUrl.length);
+            IM[moduleName] = item;
         });
     });
     //挂到window上

@@ -13,7 +13,11 @@
             'modules/Observer',
             'modules/Data',
             'modules/Mvvm',
-            'modules/Support'
+            'modules/Support',
+            'modules/Node',
+            'modules/Fx',
+            'modules/Ajax',
+            'modules/Storage'
         ]
     };
     //框架对象

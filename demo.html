@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .width-height-ratio{
+            background: #333;
+            width:10%;
+        }
+        .width-height-ratio::before{
+            content:'';
+            padding-top: 100%;
+            float: left;
+        }
+        .width-height-ratio::after{
+            content:'';
+            display: block;
+            clear: both;
+        }
+    </style>
+    <script src="../mass-Framework-master/mass-Framework-master/fx.js"></script>
+</head>
+<body>
+<div class="width-height-ratio"></div>
+<div>
+    <ul>
+        <li class="foo">111</li>
+        <li class="foo">111</li>
+        <li class="foo">111</li>
+        <li class="foo">111</li>
+    </ul>
+</div>
+<script>
+    var  arr = [1,2,3,4];
+    var newArr = [...arr];
+    console.log(newArr);
+    var method = {
+        name:'marry',
+        arr,
+        sayHello(){
+           console.log('hello');
+        }
+    };
+    console.log(method);
+    method.sayHello();
+    const original ={a:1,b:2};
+    const copy = {...original,c:3}
+    console.log(copy);
+    const {a,...noA} =copy;
+    console.log(noA);
+    var foo = document.querySelectorAll('.foo');
+    const nodes = [...foo];
+    let bar=['1'];
+    const baz = Array.from([nodes,bar]);
+    console.log(baz);
+    const x = [1, 2, 3, 4, 5];
+    console.log(...x);
+</script>
+</body>
+</html>
